@@ -58,6 +58,7 @@ class setConf():
         "}\n"
 
         f.write(template_conf)
+        f.close()
 
     def delConf(self):
         pass
