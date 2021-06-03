@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="dist/layui/css/layui.css" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <style>
+		iframe{
+			width: 100%;
+			height: 100%;
+		}
+		.layui-body{overflow: visible;}
+		#page-caozuo{
+			height: 40px;
+			width: 100%;
+		}
+		#menu .layui-nav .layui-nav-item a{
+			padding: 0 20px 0 10px;
+		}
+    </style>
+</head>
+<body class="layui-layout-body">
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">DevOps Console</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">控制台</a></li>
+            <li class="layui-nav-item"><a href="">商品管理</a></li>
+            <li class="layui-nav-item"><a href="">用户</a></li>
+            <li class="layui-nav-item">
+                <a href="javascript:;">其它系统</a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">邮件管理</a></dd>
+                    <dd><a href="">消息管理</a></dd>
+                    <dd><a href="">授权管理</a></dd>
+                </dl>
+            </li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="img/tx.png" class="layui-nav-img">
+                    贤心
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退出</a></li>
+        </ul>
+    </div>
+
+    <div id="menu" class="layui-side layui-bg-black">
+    </div>
+
+    <div class="layui-body">
+    	<!--<div id="page-caozuo">
+    		
+    	</div>-->
+        <!-- 内容主体区域 -->
+        <iframe src="pages/wendang.html" frameborder="0"></iframe>
+        <!--<div style="padding: 15px;">
+            <table class="layui-hide layui-col-md12" id="test"></table>
+        </div>-->
+    </div>
+
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+</div>
+
+<script src="dist/layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    // 导航菜单的间隔像素
+    var menuCell = 1;
+
+    layui.use('element', function(){
+        var element = layui.element;
+        var $ = layui.jquery;
+
+        data= [
+         	{
+                "name": "概览",
+                "url": "pages/wendang.html",
+                "icon": "layui-icon-snowflake",
+                "childMenus": null
+            },
+		    {
+		        "name": "官方页面",
+		        "url": "www.sys.com",
+		        "icon": "layui-icon-snowflake",
+		        "childMenus": [
+		        	{
+		                "name": "页面1",
+		                "url": "https://www.layui.com/admin/std/dist/views/home/homepage2.html",
+		                "icon": "layui-icon-snowflake",
+		                "childMenus": null
+		            },
+		            {
+		                "name": "页面2",
+		                "url": "https://www.layui.com/admin/std/dist/views/home/homepage2.html",
+		                "icon": "layui-icon-snowflake",
+		                "childMenus": null
+		            }
+		        ]
+		    },
+		    {
+		        "name": "一级导航",
+		        "url": "www.manager.com",
+		        "icon": "layui-icon-snowflake",
+		        "childMenus": [
+		            {
+		                "name": "二级导航",
+		                "url": "pages/table.html",
+		                "icon": "layui-icon-snowflake",
+		                "childMenus": [
+		                	{
+				                "name": "三级导航",
+				                "url": "pages/table.html",
+				                "icon": "layui-icon-snowflake",
+				                "childMenus": [
+				                	{
+						                "name": "table页面",
+						                "url": "pages/table.html",
+						                "icon": "layui-icon-snowflake",
+						                "childMenus": null
+						            }
+				                ]
+				            },
+		                	{
+				                "name": "table页面",
+				                "url": "pages/table.html",
+				                "icon": "layui-icon-snowflake",
+				                "childMenus": null
+				            }
+		                ]
+		            }
+		        ]
+		    }
+		];
+        console.log("data: "+data);
+//      data = JSON.parse(data);
+        var liStr= "";
+        // 遍历生成主菜单
+        for( var i = 0; i <data.length; i++){
+            //console.log("--> "+JSON.stringify(data[i]));
+            // 判断是否存在子菜单
+            if(data[i].childMenus!=null&&data[i].childMenus.length>0){
+                console.log("--> "+JSON.stringify(data[i].childMenus));
+                liStr+="<li class=\"layui-nav-item\"><a class=\"\" href=\"javascript:;\"><i class='layui-icon "+ data[i].icon +"'></i> "+data[i].name+"</a>\n"+
+                            "<dl class=\"layui-nav-child\">\n";
+                // 遍历获取子菜单
+                for( var k = 0; k <data[i].childMenus.length; k++){
+                    liStr+=getChildMenu(data[i].childMenus[k],0);
+                }
+                liStr+="</dl></li>";
+            }else{
+                liStr+="<li class=\"layui-nav-item\"><a class=\"\" href=\"javascript:;\" data-url=\""+data[i].url+"\"><i class='layui-icon "+ data[i].icon +"'></i> "+data[i].name+"</a></li>";
+            }
+        };
+        console.log(">>>> "+liStr);
+        $("#menu").html("<ul class=\"layui-nav layui-nav-tree\"  lay-filter=\"test\">\n" +liStr+"</ul>");
+        element.init();
+        
+        // 页面切换
+        $(document).on('click', '#menu a', function(){
+        	var thisPage = $(this).attr("data-url");
+        	if(typeof(thisPage) != "undefined"){
+        		if($('.layui-body iframe').attr('src') == thisPage)return;
+        		$('.layui-body iframe').attr('src', thisPage)
+        	}
+        });
+    });
+
+    // 递归生成子菜单
+    function getChildMenu(subMenu,num) {
+        console.log("num: "+num);
+        num++;
+        var subStr = "";
+        if(subMenu.childMenus!=null&&subMenu.childMenus.length>0){
+            subStr+="<dd><ul><li class=\"layui-nav-item\" ><a style=\"text-indent: "+num*menuCell+"em\" class=\"\" href=\"javascript:;\"><i class='layui-icon "+ subMenu.icon +"'></i> "+subMenu.name+"</a>" +
+                    "<dl class=\"layui-nav-child\">\n";
+            for( var j = 0; j <subMenu.childMenus.length; j++){
+                subStr+=getChildMenu(subMenu.childMenus[j],num);
+            }
+            subStr+="</dl></li></ul></dd>";
+        }else{
+            subStr+="<dd><a style=\"text-indent:"+num*menuCell+"em\" href=\"javascript:;\" data-url=\""+subMenu.url+"\"><i class='layui-icon "+ subMenu.icon +"'></i> "+subMenu.name+"</a></dd>";
+        }
+        return subStr;
+    }
+    
+</script>
+</body>
+</html>

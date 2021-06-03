@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../dist/layui/css/layui.css"/>
+	</head>
+	<body style="padding: 15px;box-sizing: border-box;">
+		<blockquote class="layui-elem-quote">该项目基于他人项目修改，如若侵权请联系我删除</blockquote>
+		<pre class="layui-code" lay-title="JavaScript" lay-skin="notepad">
+/*
+ *name: 名称
+ *url: iframe地址
+ *icon：图标
+ *childMenus：子菜单
+ *注意：该菜单支持无限级的菜单，如果用的级别较多请自行修改导航的样式，不然会引起位置错乱
+ */
+[
+ 	{
+        "name": "文档",
+        "url": "pages/wendang.html",
+        "icon": "layui-icon-snowflake",
+        "childMenus": null
+    },
+    {
+        "name": "官方页面",
+        "url": "www.sys.com",
+        "icon": "layui-icon-snowflake",
+        "childMenus": [
+        	{
+                "name": "页面1",
+                "url": "https://www.layui.com/admin/std/dist/views/home/homepage2.html",
+                "icon": "layui-icon-snowflake",
+                "childMenus": null
+            },
+            {
+                "name": "页面2",
+                "url": "https://www.layui.com/admin/std/dist/views/home/homepage2.html",
+                "icon": "layui-icon-snowflake",
+                "childMenus": null
+            }
+        ]
+    },
+    {
+        "name": "一级导航",
+        "url": "www.manager.com",
+        "icon": "layui-icon-snowflake",
+        "childMenus": [
+            {
+                "name": "二级导航",
+                "url": "pages/table.html",
+                "icon": "layui-icon-snowflake",
+                "childMenus": [
+                	{
+		                "name": "三级导航",
+		                "url": "pages/table.html",
+		                "icon": "layui-icon-snowflake",
+		                "childMenus": [
+		                	{
+				                "name": "table页面",
+				                "url": "pages/table.html",
+				                "icon": "layui-icon-snowflake",
+				                "childMenus": null
+				            }
+		                ]
+		            },
+                	{
+		                "name": "table页面",
+		                "url": "pages/table.html",
+		                "icon": "layui-icon-snowflake",
+		                "childMenus": null
+		            }
+                ]
+            }
+        ]
+    }
+]
+      	</pre>
+	</body>
+</html>
+<script src="../dist/layui/layui.js"></script>
+<script>
+//	layui.use('table', function(){
+//      var table = layui.table;
+//
+//      
+// });
+</script>

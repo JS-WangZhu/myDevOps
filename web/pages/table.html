@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" type="text/css" href="../dist/layui/css/layui.css"/>
+	</head>
+	<body>
+		<div id="test">
+			
+		</div>
+	</body>
+</html>
+<script src="../dist/layui/layui.js"></script>
+<script>
+	layui.use('table', function(){
+        var table = layui.table;
+
+        table.render({
+            elem: '#test'
+            ,url:'common/userList'
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,cols: [[
+                {field:'id', width:80, title: 'id', sort: true}
+                ,{field:'lngCm', width:80, title: 'lngCm'}
+                ,{field:'username', width:80, title: 'username', sort: true}
+            ]]
+            ,request:{
+                pageName: 'curr' //页码的参数名称，默认：page
+                ,limitName: 'nums' //每页数据量的参数名，默认：limit
+            }
+            //用于对返回的数据格式的自定义，如：
+            ,response: {
+                statusName: 'succ' //数据状态的字段名称，默认：code
+                ,statusCode: 0 //成功的状态码，默认：0
+                ,msgName: 'msg' //状态信息的字段名称，默认：msg
+                ,countName: 'totalSize' //数据总数的字段名称，默认：count
+                ,dataName: 'list' //数据列表的字段名称，默认：data
+            }
+        });
+   });
+</script>
