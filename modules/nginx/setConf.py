@@ -1,4 +1,5 @@
 import os
+import subprocess
 import time
 
 class setConf():
@@ -6,22 +7,30 @@ class setConf():
         # 数据库获取
         self.raw_conf_path = '/usr/local/etc/nginx'
         self.conf_dir = '/usr/local/etc/nginx/servers'
+        self.conf_name = ''
+        self.ssl_certificate = '.crt'
+        self.ssl_certificate_key = '.key'
+
 
     def addConf(self):
         f = open('tmp/tmp.txt', 'w+', encoding='utf-8')
-        conf_name = ""
         server_name = "www.iwangzhu.cn  iwangzhu.cn 118.195.148.81"
-        access_log = "/root/logs/www.access.log"
-        error_log = "/root/logs/www.error.log"
-        ssl_certificate = "/root/cert/iwangzhu.cn.crt"
-        ssl_certificate_key = "/root/cert/iwangzhu.cn.key"
+        access_log = self.conf_name+"_acc.log"
+        error_log = self.conf_name+"_err.log"
+        # 创建日志文件
+        cmd = 'mkdir -p '+self.conf_dir+'/'+self.conf_name+'/logs '+'& clear'+'& touch '+\
+                  self.conf_dir+'/'+self.conf_name+'/logs/'+access_log\
+                  +' & touch '+self.conf_dir+'/'+self.conf_name+'/logs/'+error_log
+        # print(cmd)
+        os.system(cmd)
+        ssl_certificate = self.conf_dir+'/'+self.conf_name+'/'+self.conf_name+self.ssl_certificate
+        ssl_certificate_key = self.conf_dir+'/'+self.conf_name+'/'+self.conf_name+self.ssl_certificate_key
         proxy_pass = "http://localhost:8443"
         template_conf = "server {\n" +\
         "    listen 443 ssl;\n" +\
         "    server_name "+server_name+";\n" +\
-        "\n" +\
-        "    access_log "+access_log+" main;\n" +\
-        "    error_log "+error_log+";\n" +\
+        "    access_log "+self.conf_dir+'/'+self.conf_name+'/logs/'+access_log+" main;\n" +\
+        "    error_log "+self.conf_dir+'/'+self.conf_name+'/logs/'+error_log+";\n" +\
         "    root   html;\n" +\
         "    index  index.html index.htm index.php;\n" +\
         "    ssl_certificate "+ssl_certificate+";   #将domain name.pem替换成您证书的文件名。\n" +\
@@ -33,9 +42,6 @@ class setConf():
         "    ## send request back to apache ##\n" +\
         "    location / {\n" +\
         "        proxy_pass  "+proxy_pass+";\n" +\
-        "        #if  (  $http_frontend_protocol = 'http') {\n" +\
-        "         #return 301 https://$host$request_uri;\n" +\
-        "        #}\n" +\
         "        #Proxy Settings\n" +\
         "        proxy_redirect     off;\n" +\
         "        proxy_set_header   Host             $host;\n" +\
@@ -56,12 +62,53 @@ class setConf():
         "        access_log off;\n" +\
         "}\n" +\
         "}\n"
+        # 上传证书
+
 
         f.write(template_conf)
         f.close()
+        # 移动文件
+        os.system("mv tmp/tmp.txt " + self.conf_dir + "/" + self.conf_name + '/' + self.conf_name + '.conf')
+        # 检查文件
+        r = self.checkConf()
+        print(r)
+        if r['status']==True:
+            return {'status': True, 'msg': '添加成功'}
+        else:
+            return {'status': False, 'msg': '添加失败'}
+
 
     def delConf(self):
+        a = os.listdir(self.conf_dir)
+        print(a)
         pass
+
 
     def modifyConf(self):
         pass
+
+
+    def checkConf(self):
+        f = subprocess.Popen('nginx -t', shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+        m = f.stderr.readlines()
+        msg = ''
+        for x in m:
+            tmp = str(x)[2:-1]
+            msg += tmp
+        if msg.find('failed') > -1:
+            status = False
+        else:
+            status = True
+        return {'status': status, 'msg': msg}
+
+    def reloadConf(self):
+        os.system('nginx -s reload')
+
+if __name__ == '__main__':
+    c = setConf()
+    # c.conf_name = 'test2'
+    # aa = c.addConf()
+    # print(aa)
+    # # a = c.checkConf()
+    # # print(a)
+    c.delConf()
