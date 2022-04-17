@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>addVhost</title>
+    <link rel="stylesheet" href="../../../layui/dist/css/layui.css">
+
+</head>
+<body>
+<!--<h3>请输入虚拟主机信息</h3>-->
+<form class="layui-form" action="">
+    <div class="layui-form-item">
+        <label class="layui-form-label">监听端口</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入0-65535之间的端口号，常用80和443"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">server_name</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入监听的ServerName，多值用空格分离"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+    <label class="layui-form-label">ssl</label>
+    <div class="layui-input-block">
+        <input type="checkbox" id="ssl_status" lay-skin="switch" lay-filter="ssl_status" lay-text="ON|OFF">
+    </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">access_log</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入access_log日志路径，默认是/root/logs/vhost_name.access.log"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">error_log</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入error_log日志路径，默认是/root/logs/vhost_name.error.log"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">root</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入root类型，默认html"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">index</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入index入口文件，默认是index.html index.htm index.php"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" id="ssl_1" style="display: none">
+        <label class="layui-form-label">ssl证书公钥</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入ssl证书公钥路径"
+                   class="layui-input">
+        </div>
+    </div>
+    <div class="layui-form-item" id="ssl_2" style="display: none">
+        <label class="layui-form-label">ssl证书私钥</label>
+        <div class="layui-input-block">
+            <input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请输入ssl证书私钥路径"
+                   class="layui-input">
+        </div>
+    </div>
+        <div class="layui-form-item layui-form-text">
+            <label class="layui-form-label">location参数</label>
+            <div class="layui-input-block">
+                <textarea placeholder="#下面提供了一个反向代理的模板
+location / {
+    proxy_pass  http://localhost:8080;
+    #Proxy Settings
+    proxy_redirect     off;
+    proxy_set_header   Host             $host;
+    proxy_set_header   X-Real-IP        $remote_addr;
+    proxy_set_header   X-Forwarded-For  $proxy_add_x_forwarded_for;
+    proxy_next_upstream error timeout invalid_header http_500 http_502 http_503 http_504;
+    proxy_max_temp_file_size 0;
+    proxy_connect_timeout      90;
+    proxy_send_timeout         90;
+    proxy_read_timeout         90;
+    proxy_buffer_size          4k;
+    proxy_buffers              4 32k;
+    proxy_busy_buffers_size    64k;
+    proxy_temp_file_write_size 64k;
+}" class="layui-textarea"></textarea>
+            </div>
+        </div>
+    </div>
+    <div class="layui-form-item" style="text-align: center">
+    <button type="button" class="layui-btn">保存</button>
+    </div>
+</form>
+<script type="text/javascript" src="../../../layui/dist/layui.js" charset="utf-8"></script>
+<script type="text/javascript" src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<script>
+    layui.use(['form'], function() {
+    layui.form.on('switch(ssl_status)', function (data) {
+        if (this.checked == true){
+            layer.msg('使用更为安全的ssl连接');
+            $("#ssl_1").css('display','block');
+            $("#ssl_2").css('display','block');
+        }else {
+            layer.msg('不使用ssl连接');
+            $("#ssl_1").css('display','none');
+            $("#ssl_2").css('display','none');
+        }
+        });
+    });
+</script>
+</body>
+</html>

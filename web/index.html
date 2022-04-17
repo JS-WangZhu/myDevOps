@@ -2,11 +2,11 @@
 <html>
 <head>
     <meta charset="utf-8">
-    <title>layui</title>
+    <title>DevOps Console</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-    <link rel="stylesheet" href="dist/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="layui/dist/css/layui.css" media="all">
     <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
     <style>
 		iframe{
@@ -30,10 +30,10 @@
         <!-- 头部区域（可配合layui已有的水平导航） -->
         <ul class="layui-nav layui-layout-left">
             <li class="layui-nav-item"><a href="">控制台</a></li>
-            <li class="layui-nav-item"><a href="">商品管理</a></li>
+            <li class="layui-nav-item"><a href="">管理</a></li>
             <li class="layui-nav-item"><a href="">用户</a></li>
             <li class="layui-nav-item">
-                <a href="javascript:;">其它系统</a>
+                <a href="javascript:;">其它</a>
                 <dl class="layui-nav-child">
                     <dd><a href="">邮件管理</a></dd>
                     <dd><a href="">消息管理</a></dd>
@@ -44,8 +44,8 @@
         <ul class="layui-nav layui-layout-right">
             <li class="layui-nav-item">
                 <a href="javascript:;">
-                    <img src="img/tx.png" class="layui-nav-img">
-                    贤心
+                    <img src="https://fileserver.iwangzhu.cn/oneblog/20210816155436853.jpeg" class="layui-nav-img">
+                    WZ
                 </a>
                 <dl class="layui-nav-child">
                     <dd><a href="">基本资料</a></dd>
@@ -72,11 +72,11 @@
 
     <div class="layui-footer">
         <!-- 底部固定区域 -->
-        © layui.com - 底部固定区域
+        Powered by WangZhu
     </div>
 </div>
 
-<script src="dist/layui/layui.js" charset="utf-8"></script>
+<script src="layui/dist/layui.js" charset="utf-8"></script>
 <!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
 
 <script>
@@ -89,19 +89,19 @@
 
         data= [
          	{
-                "name": "概览",
+                "name": "Dashboard",
                 "url": "pages/wendang.html",
                 "icon": "layui-icon-snowflake",
                 "childMenus": null
             },
 		    {
-		        "name": "官方页面",
-		        "url": "www.sys.com",
+		        "name": "中间件",
+		        "url": "#",
 		        "icon": "layui-icon-snowflake",
 		        "childMenus": [
 		        	{
-		                "name": "页面1",
-		                "url": "https://www.layui.com/admin/std/dist/views/home/homepage2.html",
+		                "name": "Nginx",
+		                "url": "pages/middleware/nginx/index.html",
 		                "icon": "layui-icon-snowflake",
 		                "childMenus": null
 		            },
